@@ -8,13 +8,13 @@ const SHA256 = require('crypto-js/sha256');
  */
 class Block {
 
-	constructor(data){
-		this.id = 0;
+    constructor(data) {
+        this.id = 0;
         this.nonce = 144444;
-      	this.body = data;
-      	this.hash = "";
+        this.body = data;
+        this.hash = "";
     }
-    
+
     /**
      * Step 1. Implement `generateHash()`
      * method that return the `self` block with the hash.
@@ -22,12 +22,21 @@ class Block {
      * Create a Promise that resolve with `self` after you create 
      * the hash of the object and assigned to the hash property `self.hash = ...`
      */
-  	// 
-  	generateHash() {
-      	// Use this to create a temporary reference of the class object
-      	let self = this;
+    // 
+    generateHash() {
+        // Use this to create a temporary reference of the class object
+        let self = this;
         //Implement your code here
-        
+        self = new Promise((resolve, reject) => {
+            self.hash = SHA256(JSON.stringify(this)).toString();
+            console.log(self.hash);
+            if (this.hash) {
+                resolve(self);
+            } else {
+                reject(Error("It broke"));
+            }
+        });
+        return self;
     }
 }
 
